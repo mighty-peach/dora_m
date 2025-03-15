@@ -6,6 +6,6 @@ defmodule DoraM do
   alias DoraM.Github
 
   def hello do
-    Github.get_latest_merged_pull_requests()
+    Github.request()
   end
 end
