@@ -7,10 +7,10 @@ defmodule DoraM.CLI do
   alias DoraM.{Github, Linear}
 
   @available_modules [
-    "gh_avg_merged",
+    "gh_avg_merged_hours",
     "gh_amount_merged",
     "linear_closed",
-    "linear_avg_bug_lifetime"
+    "linear_avg_bug_lifetime_hours"
   ]
 
   def main(args) do
@@ -55,7 +55,7 @@ defmodule DoraM.CLI do
       --mode, -o       Mode for metrics calculation (default: 'default')
 
     Examples:
-      dora_m --modules gh_avg_merged,linear_closed --period 14
+      dora_m --modules gh_avg_merged_hours,linear_closed --period 14
       dora_m --modules all
     """)
   end

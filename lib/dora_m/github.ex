@@ -7,7 +7,7 @@ defmodule DoraM.Github do
   @per_page 100
 
   # processes different metrics which you can get from GitHub API
-  def request(modules \\ ["gh_avg_merged", "gh_amount_merged"], period_days \\ 7) do
+  def request(modules \\ ["gh_avg_merged_hours", "gh_amount_merged"], period_days \\ 7) do
     Logger.info("GitHub: Receiving pull requests...")
 
     task = Task.async(fn -> get_pull_requests_for_period(period_days) end)
@@ -18,7 +18,7 @@ defmodule DoraM.Github do
     modules
     |> Enum.map(fn module ->
       case module do
-        "gh_avg_merged" ->
+        "gh_avg_merged_hours" ->
           average = avg_merged(pull_requests)
           {:ok, module, average}
 

@@ -7,10 +7,10 @@ defmodule DoraM do
 
   def run_metrics(
         modules \\ [
-          "gh_avg_merged",
+          "gh_avg_merged_hours",
           "gh_amount_merged",
           "linear_closed",
-          "linear_avg_bug_lifetime"
+          "linear_avg_bug_lifetime_hours"
         ],
         period \\ 7
       ) do
