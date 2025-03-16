@@ -1,5 +1,6 @@
 defmodule DoraM.Github do
   require Logger
+  alias DoraM.Request
 
   @gh_key Application.compile_env!(:dora_m, :gh_key)
   @gh_owner_repo Application.compile_env!(:dora_m, :gh_owner_repo)
@@ -8,7 +9,10 @@ defmodule DoraM.Github do
   # processes different metrics which you can get from GitHub API
   def request(modules \\ [:gh_avg_merged, :gh_amount_merged], period_days \\ 7) do
     Logger.info("GitHub: Receiving pull requests...")
-    pull_requests = get_pull_requests_for_period(period_days)
+
+    task = Task.async(fn -> get_pull_requests_for_period(period_days) end)
+    pull_requests = Task.await(task)
+
     Logger.info("GitHub: Pull requests received, #{length(pull_requests)}")
 
     modules
@@ -67,9 +71,9 @@ defmodule DoraM.Github do
   end
 
   defp make_request(url) do
-    Req.get(
+    Request.get(
       url,
-      headers: [
+      [
         {"Authorization", "Bearer #{@gh_key}"},
         {"X-GitHub-Api-Version", "2022-11-28"},
         {"Accept", "application/vnd.github.v3+json"}
