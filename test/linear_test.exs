@@ -46,10 +46,10 @@ defmodule DoraM.LinearTest do
     end)
 
     # Act
-    result = Linear.request([:linear_closed], 7)
+    result = Linear.request(["linear_closed"], 7)
 
     # Assert
-    assert result == [{:ok, :linear_closed, 3}]
+    assert result == [{:ok, "linear_closed", 3}]
   end
 
   test "return average lifetime of bugs" do
@@ -96,9 +96,9 @@ defmodule DoraM.LinearTest do
     end)
 
     # Act
-    result = Linear.request([:linear_avg_bug_lifetime], 7)
+    result = Linear.request(["linear_avg_bug_lifetime"], 7)
 
     # Assert
-    assert result == [{:ok, :linear_avg_bug_lifetime, 48}]
+    assert result == [{:ok, "linear_avg_bug_lifetime", 48}]
   end
 end

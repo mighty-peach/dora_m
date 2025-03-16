@@ -35,7 +35,7 @@ defmodule DoraM.Linear do
   }
   """
 
-  def request(modules \\ [:linear_closed, :linear_avg_bug_lifetime], period_days \\ 7) do
+  def request(modules \\ ["linear_closed", "linear_avg_bug_lifetime"], period_days \\ 7) do
     Logger.info("Linear: Receiving issues...")
     issues = make_request(period_days)
     Logger.info("Linear: issues received -> #{length(issues)}")
@@ -43,11 +43,10 @@ defmodule DoraM.Linear do
     modules
     |> Enum.map(fn module ->
       case module do
-        :linear_closed ->
-          Logger.info("Linear: closed tasks: #{length(issues)}")
+        "linear_closed" ->
           {:ok, module, length(issues)}
 
-        :linear_avg_bug_lifetime ->
+        "linear_avg_bug_lifetime" ->
           bugs =
             get_bugs(issues)
 
@@ -58,7 +57,6 @@ defmodule DoraM.Linear do
             |> Kernel./(length(bugs))
             |> round()
 
-          Logger.info("Linear: average bug lifetime: #{lifetime}")
           {:ok, module, lifetime}
 
         _ ->

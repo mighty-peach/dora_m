@@ -1,15 +1,28 @@
 defmodule DoraM do
   @moduledoc """
-  Run this programm and get your release frequency and time to market
+  Run this program and get your release frequency and time to market
   """
 
-  # TODO: cover with tests
-  # TODO: add CLI like start
-  # TODO: pass params to CLI
+  alias DoraM.{Github, Linear}
 
-  alias DoraM.Github
+  def run_metrics(
+        modules \\ [
+          "gh_avg_merged",
+          "gh_amount_merged",
+          "linear_closed",
+          "linear_avg_bug_lifetime"
+        ],
+        period \\ 7
+      ) do
+    github_modules = modules |> Enum.filter(&String.starts_with?(&1, "gh_"))
+    linear_modules = modules |> Enum.filter(&String.starts_with?(&1, "linear_"))
 
-  def hello do
-    Github.request()
+    github_results =
+      if !Enum.empty?(github_modules), do: Github.request(github_modules, period), else: []
+
+    linear_results =
+      if !Enum.empty?(linear_modules), do: Linear.request(linear_modules, period), else: []
+
+    github_results ++ linear_results
   end
 end

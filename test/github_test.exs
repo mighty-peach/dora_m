@@ -38,10 +38,10 @@ defmodule DoraM.GithubTest do
     end)
 
     # Act
-    result = Github.request([:gh_avg_merged], 7)
+    result = Github.request(["gh_avg_merged"], 7)
 
     # Assert
-    assert result == [{:ok, :gh_avg_merged, 24}]
+    assert result == [{:ok, "gh_avg_merged", 24}]
   end
 
   test "return amount of merged pull requests" do
@@ -86,9 +86,9 @@ defmodule DoraM.GithubTest do
     end)
 
     # Act
-    result = Github.request([:gh_amount_merged], 7)
+    result = Github.request(["gh_amount_merged"], 7)
 
     # Assert
-    assert result == [{:ok, :gh_amount_merged, 3}]
+    assert result == [{:ok, "gh_amount_merged", 3}]
   end
 end
